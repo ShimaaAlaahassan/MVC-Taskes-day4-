@@ -1,0 +1,34 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Int32
+
+<h2>Add New Dependant</h2>
+
+<from action="/Dependant/AddToDb">
+
+    <label>name :</label>
+    <input id="Name" name="Name" type="text" />
+
+    <br />
+    <label>gender :</label>
+    <input id="Sex" name="Sex" type="text" />
+    <br />
+
+    <br />
+    <label>birthdate : </label>
+    <input id="BirthDate" name="BirthDate" type="date" />
+    <br />
+    <br />
+    <label>Relationship :</label>
+    <input id="Relationship" name="Relationship" type="text" />
+
+    <br />
+    <input type="submit" value="add" />
+</from>
+
+<a href="/Dependant/Index">go back to all dependance</a>
+
+

@@ -1,0 +1,26 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    SelectList selectmanager = new SelectList(ViewBag.manager, "SSN", "Fname", Model.mngrSSN);
+}
+@model Department
+<h2>Edit Department</h2>
+
+@using (Html.BeginForm("SaveEdit", "Department", FormMethod.Post))
+{
+    <input name="Number" id="Number" hidden />
+    <div>
+        @Html.LabelFor(m=>m.Name)
+        @Html.TextBoxFor(m=>m.Name,new {@class="form-control"})
+
+    </div>
+   <div>
+       
+    @*@Html.LabelFor(m=>m.employeeManege)*@
+   @* @Html.DropDownListFor(m=>m.mngrSSN,(SelectList)ViewBag.empMan)*@
+    @Html.DropDownListFor(s=>s.mngrSSN,selectmanager,new {@class="form-control"})
+   </div>
+
+   <input  type="submit" value="Edit"/> 
+}

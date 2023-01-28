@@ -1,0 +1,30 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    int i = 1;
+    int j = 1;
+}
+@model Department
+
+<h1>Department Data:</h1>
+<br />
+<h4>Name: @Model.Name</h4>
+
+@foreach (var deptLocation in Model.DepartmentLocations)
+{
+    <h4>Location @(i++) : @deptLocation.Location</h4>
+
+}
+
+<h4>Deoartments Projects:</h4>
+@foreach (var project in Model.Projects)
+{
+    <h4>Project @(j++):</h4>
+    <h6>Project Name: @project.Name</h6>
+    <h6>Project Location: @project.Location</h6>
+
+}
+
+<a href="/WorksOnProject/AddEmployeesToProjects/@Model.Number">Add Employees To Projects</a>
+
