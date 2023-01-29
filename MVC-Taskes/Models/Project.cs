@@ -11,6 +11,7 @@ namespace MVC_Taskes.Models
         public string? Location { get; set; }
 
         [ForeignKey("Department")]
+        [Display(Name="department")]
         public int? DeptNum { get; set; }
         public virtual Department? Department { get; set; }
         public List<WorksOnProject>? WorksOnProjects { get; set; }

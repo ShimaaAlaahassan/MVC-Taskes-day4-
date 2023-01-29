@@ -1,0 +1,40 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model ProjectVM
+<form asp-action="Add" asp-controller="Project" method="post">
+
+    <label asp-for="Name"></label>
+    <input asp-for="Name" class="form-control"/>
+    <div>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <label asp-for="Location"></label>
+    <input asp-for="Location" class="form-control"  />
+    <div>
+        <span asp-validation-for="Location" class="text-danger"></span>
+    </div>
+
+    <label asp-for="ConfirmLocation"></label>
+    <input asp-for="ConfirmLocation" class="form-control" />
+    <div>
+        <span asp-validation-for="ConfirmLocation" class="text-danger"></span>
+    </div>
+    
+
+   @* <label asp-for="DeptNum"></label>
+    <select asp-for="DeptNum" asp-items="ViewBag.depts" class="form-control">
+        <option value="">choose one</option>
+
+    </select>*@
+    <input type="submit" value="Add" class="btn-danger"/>
+</form>
+
+@section Scripts{
+    <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+}

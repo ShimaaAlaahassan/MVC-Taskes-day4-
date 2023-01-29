@@ -16,13 +16,13 @@ namespace MVC_Taskes.Controllers
         //to display all department
         public IActionResult Index()
         {
-            List<Department> departments = db.Departments.Include(s=>s.DepartmentLocations).ToList();
+            List<Department> departments = db.Departments.Include(s=>s.DepartmentLocations).Include(d=>d.employeeManege).ToList();
            
             return View(departments);
         }
-        public IActionResult Details(int id) 
+        public IActionResult Details(int id)
         {
-           Department department=db.Departments.Include(s=>s.employeeManege).SingleOrDefault(t=>t.Number==id);
+            Department department = db.Departments.Include(s => s.employeeManege).SingleOrDefault(t => t.Number == id);
             MangerNameVM vM = new MangerNameVM();
             vM.Name = department.Name;
             vM.mngrSSN = department.mngrSSN;
@@ -52,13 +52,20 @@ namespace MVC_Taskes.Controllers
         }
         public IActionResult SaveEdit(Department department)
         {
-            Department olddept=db.Departments.FirstOrDefault(s=>s.Number==department.Number);
+            Department olddept=db.Departments.Include(m=>m.employeeManege.Fname).FirstOrDefault(s=>s.Number==department.Number);
             olddept.Name = department.Name;
             olddept.DepartmentLocations = department.DepartmentLocations;
             olddept.mngrSSN = department.mngrSSN;
             db.SaveChanges();
             return RedirectToAction(nameof(Index));
 
+        }
+        public IActionResult Delete(int id)
+        {
+            Department department = db.Departments.SingleOrDefault(d => d.Number == id);
+            db.Departments.Remove(department);
+            db.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
 
 

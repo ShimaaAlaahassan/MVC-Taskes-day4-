@@ -12,8 +12,10 @@
             <th>Name</th>
             <th>location</th>
             <th>deptManger</th>
-
+            <th>Details</th>
             <th>Edit</th>
+            <th>Delete</th>
+            
         </tr>
     </thead>
     <tbody>
@@ -28,9 +30,11 @@
                         @deptm.Location
                         
                     }</td>
-                <td>@item.mngrSSN</td>
+                <td>@item.employeeManege</td>
 
+                <td>@Html.ActionLink("Details","Details","Department",new {Id = item.Number})</td>
                 <td>@Html.ActionLink("Edit","Edit","Department",new {Id = item.Number})</td>
+                <td>@Html.ActionLink("Delete","Delete","Department",new {Id = item.Number})</td>
             </tr>
         }
     </tbody>
