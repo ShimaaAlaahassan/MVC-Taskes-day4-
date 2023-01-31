@@ -11,14 +11,18 @@ namespace MVC_Taskes
 
             var app = builder.Build();
 
+            //builder.Services.AddSession();
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
+                
             }
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            //app.UseSession();
 
             app.UseAuthorization();
 

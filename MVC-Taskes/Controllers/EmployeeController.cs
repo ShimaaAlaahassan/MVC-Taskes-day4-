@@ -11,7 +11,13 @@ namespace MVC_Taskes.Controllers
         {
             db = new CompanyDBContext();
         }
-        public IActionResult Index()
+        //public IActionResult Index()
+        //{
+        //    List<Employee> employees = db.Employees.ToList();
+        //    return View(employees);
+        //}
+
+        public IActionResult Getall()
         {
             List<Employee> employees = db.Employees.ToList();
             return View(employees);
@@ -25,6 +31,15 @@ namespace MVC_Taskes.Controllers
             else
                 return View("GetById", employee);
         }
+        //new task7
+        public IActionResult Details(int? id)
+        {
+            if (id == null) return View("Error");
+            Employee? employee = db.Employees.Include(s => s.WorksOnProjects).ThenInclude(v => v.Project).SingleOrDefault(d => d.SSN == id);
+            if(employee==null) return View("Error");
+            return View(employee);
+
+        }
         public IActionResult Add()
         {
             List<Employee> employees = db.Employees.ToList();
@@ -35,7 +50,7 @@ namespace MVC_Taskes.Controllers
         {
             db.Employees.Add(employee);
             db.SaveChanges();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Getall));
         }
 
         public IActionResult Edit(int id)
@@ -51,38 +66,39 @@ namespace MVC_Taskes.Controllers
 
         public IActionResult EditDB(Employee employee)
         {
-            Employee oldEmp = db.Employees.Where(e => e.SSN == employee.SSN).SingleOrDefault();
-            oldEmp.Fname = employee.Fname;
-            oldEmp.Lname = employee.Lname;
-            oldEmp.Minit = employee.Minit;
-            oldEmp.Address = employee.Address;
-            oldEmp.Salary = employee.Salary;
-            oldEmp.Sex = employee.Sex;
-            oldEmp.SupervisorSSN = employee.SupervisorSSN;
-            oldEmp.BirthDate = employee.BirthDate;
+            //Employee? oldEmp = db.Employees.Where(e => e.SSN == employee.SSN).SingleOrDefault();
+            //oldEmp.Fname = employee.Fname;
+            //oldEmp.Lname = employee.Lname;
+            //oldEmp.Minit = employee.Minit;
+            //oldEmp.Address = employee.Address;
+            //oldEmp.Salary = employee.Salary;
+            //oldEmp.Sex = employee.Sex;
+            //oldEmp.SupervisorSSN = employee.SupervisorSSN;
+            //oldEmp.BirthDate = employee.BirthDate;
+            db.Employees.Update(employee);
 
             db.SaveChanges();
 
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int? id)
         {
 
-            Employee Employee = db.Employees.Where(e => e.SSN == id).SingleOrDefault();
+            Employee? Employee = db.Employees.Where(e => e.SSN == id).SingleOrDefault();
             db.Employees.Remove(Employee);
             db.SaveChanges();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Getall));
         }
 
         public IActionResult Login()
         {
             return View();
         }
-        public IActionResult LoginDB(Employee employeeTologin)
+        public IActionResult LoginDB(Employee? employeeTologin)
         {
 
-            Employee employee = db.Employees.SingleOrDefault(e => e.SSN == employeeTologin.SSN && e.Fname == employeeTologin.Fname);
+            Employee? employee = db.Employees.SingleOrDefault(e => e.SSN == employeeTologin.SSN && e.Fname == employeeTologin.Fname);
 
             if (employee == null)
                 return View("Error");
@@ -97,7 +113,7 @@ namespace MVC_Taskes.Controllers
         public IActionResult AllEmpManger()
         {
 
-            List<Employee>? employees = db.Departments.Include(e => e.employeeManege).Where(e => e.mngrSSN != null).Select(e => e.employeeManege).ToList();
+            List<Employee> employees = db.Departments.Include(e => e.employeeManege).Where(e => e.mngrSSN != null).Select(e => e.employeeManege).ToList();
 
             return View(employees);
 

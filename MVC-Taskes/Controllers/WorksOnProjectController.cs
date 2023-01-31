@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVC_Taskes.Models;
 
@@ -11,7 +12,13 @@ namespace MVC_Taskes.Controllers
         {
             db = new CompanyDBContext();
         }
-        
+        public IActionResult Index()
+        {
+            List<WorksOnProject> worksOnProjects = db.WorksOnProjects
+             .Include(s => s.Employees).Include(w => w.Project).ToList();
+            return View(worksOnProjects);
+
+        }
         public IActionResult AddEmployeesToProjects(int id)
         {
             List<Project> projects = db.Projects.Where(p => p.DeptNum == id).ToList();
@@ -47,6 +54,47 @@ namespace MVC_Taskes.Controllers
 
             return View(worksOnProject1);
         }
+        [HttpGet]
+        public IActionResult EditEmpHours()
+        {
+            List<Employee> employees = db.Employees.ToList();
+            ViewBag.Emps = new SelectList(employees,"SSN","Fname");
+
+            return View();
+        }
+
+        public IActionResult EditEmployeeHour_emp(int id)
+        {
+            List<Project>? projects = db.WorksOnProjects.Include(wop => wop.Project).Where(wop => wop.EmpSSN == id).Select(wop => wop.Project).ToList();
+            ViewBag.projects = new SelectList(projects, "Number", "Name");
+            if (projects.Count > 0)
+            {
+                WorksOnProject worksOnProject = new WorksOnProject()
+                {
+                    Hours = db.WorksOnProjects.SingleOrDefault(wop => (wop.EmpSSN == id) && (wop.projNum == projects[0].Number)).Hours
+                };
+                return PartialView("_ProjectsList", worksOnProject);
+            }
+            return PartialView("_ProjectsList");
+        }
+        public IActionResult EditEmployeeHour_emp_proj(int id, int projNum)
+        {
+            WorksOnProject? worksOnProject = db.WorksOnProjects
+             .SingleOrDefault(wop => wop.EmpSSN == id && wop.projNum == projNum);
+            
+            return PartialView("_hour", worksOnProject);
+        }
+        [HttpPost]
+        public IActionResult EditEmpHours( WorksOnProject works)
+        {
+           
+                db.WorksOnProjects.Update(works);
+                db.SaveChanges();
+                 return View();
+
+
+        }
+
 
     }
 }

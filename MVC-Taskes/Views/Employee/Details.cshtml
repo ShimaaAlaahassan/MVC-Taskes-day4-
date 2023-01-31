@@ -1,0 +1,16 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Employee
+
+<h1>Employee Details</h1>
+
+<partial name="_EmployeeCard" model="Model"></partial>
+
+@foreach(var item in Model.WorksOnProjects)
+{
+    @(ViewBag.hour=item.Hours)
+    <partial name="_Project" model="@item.Project" view-data="ViewData"></partial>
+}

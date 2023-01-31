@@ -6,15 +6,15 @@
 }
 @model List<Employee>
 <a href="/Employee/Add">Add New Employee</a>
-<table class="table table-bordered table-hover">
+@*<table class="table table-bordered table-hover">
         <thead>
             <tr>
                 <th>#</th>
                 <th>Name</th>
-                @*<th>Gender</th>
+                <th>Gender</th>
                 <th>Address</th>
                 <th>Salary</th>
-                <th>BirthDate</th>*@
+                <th>BirthDate</th>
                 <th>Details</th>
                 <th>Edit</th>
                 <th>Delete</th>
@@ -28,10 +28,10 @@
                 <tr>
                     <td>@(i++)</td>
                     <td>@(employee.Fname + " " + employee.Lname + " " + employee.Minit)</td>
-                    @*<td>@employee.Sex</td>
+                    <td>@employee.Sex</td>
                     <td>@employee.Address</td>
                     <td>@employee.Salary</td>
-                    <td>@employee.BirthDate</td>*@
+                    <td>@employee.BirthDate</td>
                     <td><a href="/Employee/GetById/@employee.SSN">Details</a></td>
                     <td><a href="/Employee/Edit/@employee.SSN">Edit</a></td>
                     <td><a href="/Employee/Delete/@employee.SSN">Delete</a></td>
@@ -40,4 +40,7 @@
                 </tr>
             }
         </tbody>
-  </table>
+  </table>*@
+
+
+
